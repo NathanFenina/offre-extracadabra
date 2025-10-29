@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit SEO Post-Migration - Extracadabra</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-number.negative {
+            color: #e74c3c;
+        }
+        
+        .stat-number.positive {
+            color: #27ae60;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .alert-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .alert-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .alert-box p {
+            color: #856404;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .insight-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 40px 0;
+        }
+        
+        .insight-box h3 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .insight-box p {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .insight-box strong {
+            color: #2c3e50;
+        }
+        
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .finding-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-top: 4px solid #667eea;
+        }
+        
+        .finding-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        
+        .finding-card h4 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        
+        .finding-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        .deliverables {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+        }
+        
+        .deliverables .section-title {
+            color: white;
+        }
+        
+        .deliverable-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .deliverable-item {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .deliverable-item h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .timeline {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .timeline-day {
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.2em;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .timeline-content h4 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .timeline-content li {
+            padding: 8px 0;
+            color: #666;
+        }
+        
+        .timeline-content li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .price-box {
+            background: white;
+            color: #2c3e50;
+            padding: 40px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        
+        .price-box .price {
+            font-size: 3.5em;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .price-box .duration {
+            font-size: 1.3em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .contact-info {
+            background: #2c3e50;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .stat-number {
+                font-size: 2.5em;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔍 Audit SEO Post-Migration</h1>
+            <p>Diagnostic & Plan d'Action pour Extracadabra.com</p>
+            <div class="badge">Par AdsRank - Expert SEO Technique</div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">📊 Ce Que J'ai Découvert</h2>
+            <p style="text-align: center; font-size: 1.2em; color: #666; max-width: 800px; margin: 0 auto 40px;">
+                Suite à notre échange et mon analyse préliminaire de votre GSC, voici le diagnostic complet de la situation post-migration du 21-22 juin 2024.
+            </p>
+            
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-number negative">-74%</div>
+                    <div class="stat-label">Chute d'Indexation</div>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.95em;">De 6 000-7 000 à 1 640 pages</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number negative">-43%</div>
+                    <div class="stat-label">Mots-clés Perdus</div>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.95em;">De 7 000 à 4 005 mots-clés</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number positive">+27%</div>
+                    <div class="stat-label">Positions Top 3</div>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.95em;">De 135 à 172 mots-clés</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">606</div>
+                    <div class="stat-label">URLs SEO-Friendly Créées</div>
+                    <p style="margin-top: 10px; color: #999; font-size: 0.95em;">Contre 70 avant migration</p>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <h3>⚠️ Le Paradoxe Extracadabra</h3>
+                <p>
+                    <strong>Excellente nouvelle :</strong> Vos positions stratégiques s'améliorent (+27% en top 3).<br>
+                    <strong>Mauvaise nouvelle :</strong> Vous perdez massivement en indexation (-74%) et en couverture de mots-clés (-43%).<br><br>
+                    <strong>La conclusion :</strong> Votre stratégie de contenu est bonne, mais la technique post-migration tue votre potentiel. Il faut agir maintenant avant que la chute d'indexation n'impacte aussi vos bonnes positions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: white;">
+        <div class="container">
+            <h2 class="section-title">🎯 Les 5 Problèmes Identifiés</h2>
+            
+            <div class="findings-grid">
+                <div class="finding-card">
+                    <div class="finding-icon">🔗</div>
+                    <h4>1. Gestion des Offres Expirées</h4>
+                    <p><strong>Problème :</strong> Les 8 000-12 000 offres expirent après 30 jours et redirigent en 301 vers l'accueil, créant un flux massif de redirections qui épuise le crawl budget.</p>
+                    <p style="margin-top: 10px;"><strong>Impact :</strong> Google visite des milliers de pages mortes au lieu d'explorer vos nouvelles pages stratégiques.</p>
+                </div>
+                
+                <div class="finding-card">
+                    <div class="finding-icon">📄</div>
+                    <h4>2. Pages Temporaires Hors Sitemap</h4>
+                    <p><strong>Problème :</strong> Les offres d'emploi actives ne sont pas dans le sitemap pour éviter l'indexation de contenu périmé, mais cela limite aussi leur visibilité immédiate.</p>
+                    <p style="margin-top: 10px;"><strong>Impact :</strong> Google ne découvre pas rapidement vos nouvelles offres, réduisant leur potentiel de trafic.</p>
+                </div>
+                
+                <div class="finding-card">
+                    <div class="finding-icon">⚙️</div>
+                    <h4>3. 606 URLs SEO Sous-Exploitées</h4>
+                    <p><strong>Problème :</strong> Vos pages métier × contrat × ville (ex: "serveur CDI Paris") sont bien structurées mais beaucoup ne sont pas indexées ou mal crawlées.</p>
+                    <p style="margin-top: 10px;"><strong>Impact :</strong> Vous perdez du trafic qualifié sur des requêtes à forte intention face à Indeed et Lower.</p>
+                </div>
+                
+                <div class="finding-card">
+                    <div class="finding-icon">🤖</div>
+                    <h4>4. Budget de Crawl Mal Priorisé</h4>
+                    <p><strong>Problème :</strong> Google perd du temps sur des milliers d'offres expirées au lieu de se concentrer sur vos pages rubriques stratégiques (métiers, villes, secteurs).</p>
+                    <p style="margin-top: 10px;"><strong>Impact :</strong> Vos meilleures pages ne sont pas crawlées assez souvent pour rester dans l'index.</p>
+                </div>
+                
+                <div class="finding-card">
+                    <div class="finding-icon">📉</div>
+                    <h4>5. Redirections et Canoniques en Masse</h4>
+                    <p><strong>Problème :</strong> La migration a créé un excès de redirections et de balises canoniques qui brouillent les signaux envoyés à Google.</p>
+                    <p style="margin-top: 10px;"><strong>Impact :</strong> Google ne sait plus quelles pages prioriser et désindexe progressivement votre contenu.</p>
+                </div>
+                
+                <div class="finding-card">
+                    <div class="finding-icon">🎯</div>
+                    <h4>La Bonne Nouvelle</h4>
+                    <p><strong>Opportunité :</strong> Vos positions top 3 augmentent malgré tout (+27%), ce qui prouve que votre contenu plaît à Google quand il le trouve.</p>
+                    <p style="margin-top: 10px;"><strong>Potentiel :</strong> En corrigeant la technique, vous pouvez récupérer facilement 40-50% de l'indexation perdue en quelques semaines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title">🔬 Méthodologie d'Audit</h2>
+            
+            <div class="insight-box">
+                <h3>Ce que je vais analyser en détail</h3>
+                
+                <p><strong>📊 Analyse Screaming Frog Complète</strong></p>
+                <p>Crawl de l'intégralité du site pour cartographier toutes les redirections, les canoniques, les pages orphelines, et les problèmes techniques. Je comparerai l'état actuel avec les données pré-migration pour identifier précisément ce qui a été cassé.</p>
+                
+                <p style="margin-top: 20px;"><strong>🔍 Audit Google Search Console Approfondi</strong></p>
+                <p>Analyse des 1 640 pages indexées vs les pages désindexées. Je vais identifier quels patterns d'URLs sont touchés (offres expirées, pages métiers, pages villes, etc.) et pourquoi Google les refuse.</p>
+                
+                <p style="margin-top: 20px;"><strong>🎯 Cartographie des Mots-Clés Perdus</strong></p>
+                <p>Identification des 3 000 mots-clés perdus depuis la migration : quelles requêtes, quelles pages, quel volume de trafic potentiel. Je vais prioriser ceux à récupérer en priorité.</p>
+                
+                <p style="margin-top: 20px;"><strong>⚙️ Audit du Budget de Crawl</strong></p>
+                <p>Analyse des statistiques d'exploration pour comprendre comment Google explore votre site, combien de temps il passe sur les pages expirées vs les pages stratégiques, et comment réorienter son attention.</p>
+                
+                <p style="margin-top: 20px;"><strong>📝 Benchmarking Concurrentiel</strong></p>
+                <p>Comparaison avec Indeed et Lower (vos concurrents mentionnés) pour voir comment ils gèrent l'indexation de leurs job boards et adapter les meilleures pratiques à votre contexte HCR.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="deliverables">
+        <div class="container">
+            <h2 class="section-title">📦 Livrables de l'Audit (2 Jours)</h2>
+            
+            <div class="deliverable-list">
+                <div class="deliverable-item">
+                    <h4>✅ Rapport d'Audit Complet</h4>
+                    <p>Document détaillé avec tous les problèmes identifiés, hiérarchisés par impact et urgence</p>
+                </div>
+                
+                <div class="deliverable-item">
+                    <h4>✅ Cartographie des URLs</h4>
+                    <p>Mapping complet avant/après migration avec identification des pages perdues et des redirections problématiques</p>
+                </div>
+                
+                <div class="deliverable-item">
+                    <h4>✅ Liste des Mots-Clés Perdus</h4>
+                    <p>Fichier Excel avec les 3 000 mots-clés désindexés, volumes de recherche et pages concernées</p>
+                </div>
+                
+                <div class="deliverable-item">
+                    <h4>✅ Plan d'Action Priorisé</h4>
+                    <p>Roadmap en 3 phases : Quick Wins (semaine 1), Actions Moyen Terme (1 mois), Stratégie Long Terme (3-6 mois)</p>
+                </div>
+                
+                <div class="deliverable-item">
+                    <h4>✅ Recommandations Techniques</h4>
+                    <p>Guide précis pour corriger les redirections, gérer les offres expirées, optimiser le crawl budget et restructurer le sitemap</p>
+                </div>
+                
+                <div class="deliverable-item">
+                    <h4>✅ Stratégie Sitemap</h4>
+                    <p>Nouvelle architecture de sitemaps segmentés pour gérer efficacement les 8-12k offres + les 606 pages stratégiques</p>
+                </div>
+                
+                <div class="deliverable-item">
+                    <h4>✅ Document Partagé</h4>
+                    <p>Google Doc collaboratif avec vous pour valider les hypothèses et ajuster en temps réel</p>
+                </div>
+                
+                <div class="deliverable-item">
+                    <h4>✅ Session de Restitution</h4>
+                    <p>Présentation en visio (1h) des résultats, réponses à vos questions et priorisation des actions avec vous</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">⏱️ Planning de Réalisation</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-day">Jour 1</div>
+                    <div class="timeline-content">
+                        <h4>Collecte & Analyse Technique</h4>
+                        <ul>
+                            <li>Accès GSC, Analytics et données migration confirmés</li>
+                            <li>Crawl Screaming Frog complet du site</li>
+                            <li>Export et analyse des données Search Console</li>
+                            <li>Identification des patterns d'URLs désindexées</li>
+                            <li>Analyse du budget de crawl et statistiques d'exploration</li>
+                            <li>Premier diagnostic et validation des hypothèses avec vous</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-day">Jour 2</div>
+                    <div class="timeline-content">
+                        <h4>Analyse Approfondie & Livrables</h4>
+                        <ul>
+                            <li>Cartographie complète des redirections et canoniques</li>
+                            <li>Analyse des 3 000 mots-clés perdus et opportunités</li>
+                            <li>Benchmarking Indeed / Lower sur gestion job board</li>
+                            <li>Rédaction du rapport d'audit complet</li>
+                            <li>Création de la roadmap d'actions priorisées</li>
+                            <li>Présentation des résultats en visio et validation du plan</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert-box" style="background: #d4edda; border-color: #28a745;">
+                <h3 style="color: #155724;">🚀 Résultats Attendus Après Implémentation</h3>
+                <p style="color: #155724;">
+                    <strong>Court terme (2-3 semaines) :</strong> Récupération de 40-50% des pages perdues grâce aux quick wins (redirections, crawl budget, sitemap).<br><br>
+                    <strong>Moyen terme (1-2 mois) :</strong> Remontée vers 4 000-5 000 pages indexées avec amélioration des positions sur les requêtes stratégiques métier × ville.<br><br>
+                    <strong>Long terme (3-6 mois) :</strong> Stabilisation à 6 000-7 000 pages indexées avec croissance du trafic organique de 30-50%.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>💰 Investissement</h2>
+            <p>Audit complet en 2 jours avec roadmap d'actions et support</p>
+            
+            <div class="price-box">
+                <div class="price">1 000€ HT</div>
+                <div class="duration">Soit 1 200€ TTC</div>
+                <p style="margin-top: 20px; font-size: 1.1em; color: #666;">
+                    ✓ Audit technique Screaming Frog complet<br>
+                    ✓ Analyse GSC et cartographie des pertes<br>
+                    ✓ Roadmap d'actions en 3 phases<br>
+                    ✓ Document partagé collaboratif<br>
+                    ✓ Session de restitution en visio<br>
+                    ✓ Support email 15 jours post-livraison
+                </p>
+            </div>
+            
+            <p style="margin-top: 40px; font-size: 1.15em;">
+                <strong>⏰ Démarrage dès validation</strong><br>
+                Livraison complète sous 48h pour agir rapidement sur la tendance
+            </p>
+        </div>
+    </section>
+
+    <section class="contact-info">
+        <div class="container">
+            <h3>📧 Lancer l'Audit Maintenant</h3>
+            <p>Réponse et proposition envoyées sous 24h comme convenu</p>
+            <p style="margin-top: 20px; font-size: 1.4em; font-weight: 600;">
+                [Ton Email] • [Ton Téléphone]
+            </p>
+            <p style="margin-top: 30px; opacity: 0.8;">
+                AdsRank - Expert SEO Technique & Acquisition Digitale<br>
+                Spécialiste des audits post-migration et job boards
+            </p>
+        </div>
+    </section>
+</body>
+</html>
