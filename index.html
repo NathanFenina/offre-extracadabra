@@ -66,7 +66,7 @@
         
         .stat-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-top: 40px;
         }
@@ -218,57 +218,6 @@
             margin-bottom: 10px;
         }
         
-        .timeline {
-            background: white;
-            padding: 50px;
-            border-radius: 15px;
-            margin: 40px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .timeline-item {
-            display: flex;
-            gap: 30px;
-            margin: 30px 0;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .timeline-day {
-            background: #667eea;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.2em;
-            min-width: 120px;
-            text-align: center;
-        }
-        
-        .timeline-content h4 {
-            color: #2c3e50;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-        
-        .timeline-content ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .timeline-content li {
-            padding: 8px 0;
-            color: #666;
-        }
-        
-        .timeline-content li:before {
-            content: "✓ ";
-            color: #27ae60;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
         .cta-section {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             padding: 80px 0;
@@ -326,6 +275,29 @@
             opacity: 0.9;
         }
         
+        .contact-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        
         @media (max-width: 768px) {
             header h1 {
                 font-size: 2em;
@@ -339,7 +311,11 @@
                 font-size: 2.5em;
             }
             
-            .timeline-item {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
                 flex-direction: column;
             }
         }
@@ -350,15 +326,15 @@
         <div class="container">
             <h1>🔍 Audit SEO Post-Migration</h1>
             <p>Diagnostic & Plan d'Action pour Extracadabra.com</p>
-            <div class="badge">Par AdsRank - Expert SEO Technique</div>
+            <div class="badge">Nathan Fenina - Expert SEO Technique</div>
         </div>
     </header>
 
     <section>
         <div class="container">
-            <h2 class="section-title">📊 Ce Que J'ai Découvert</h2>
+            <h2 class="section-title">📊 Ce Qu'On a Parcouru Ensemble</h2>
             <p style="text-align: center; font-size: 1.2em; color: #666; max-width: 800px; margin: 0 auto 40px;">
-                Suite à notre échange et mon analyse préliminaire de votre GSC, voici le diagnostic complet de la situation post-migration du 21-22 juin 2024.
+                Suite à notre échange, voici un récapitulatif des éléments clés identifiés concernant la migration du 21-22 juin 2024.
             </p>
             
             <div class="stat-grid">
@@ -376,11 +352,6 @@
                     <div class="stat-number positive">+27%</div>
                     <div class="stat-label">Positions Top 3</div>
                     <p style="margin-top: 10px; color: #999; font-size: 0.95em;">De 135 à 172 mots-clés</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">606</div>
-                    <div class="stat-label">URLs SEO-Friendly Créées</div>
-                    <p style="margin-top: 10px; color: #999; font-size: 0.95em;">Contre 70 avant migration</p>
                 </div>
             </div>
 
@@ -447,10 +418,10 @@
 
     <section style="background: #f8f9fa;">
         <div class="container">
-            <h2 class="section-title">🔬 Méthodologie d'Audit</h2>
+            <h2 class="section-title">🔬 Ce Qu'On Va Analyser Ensemble</h2>
             
             <div class="insight-box">
-                <h3>Ce que je vais analyser en détail</h3>
+                <h3>Les Points d'Investigation</h3>
                 
                 <p><strong>📊 Analyse Screaming Frog Complète</strong></p>
                 <p>Crawl de l'intégralité du site pour cartographier toutes les redirections, les canoniques, les pages orphelines, et les problèmes techniques. Je comparerai l'état actuel avec les données pré-migration pour identifier précisément ce qui a été cassé.</p>
@@ -472,7 +443,7 @@
 
     <section class="deliverables">
         <div class="container">
-            <h2 class="section-title">📦 Livrables de l'Audit (2 Jours)</h2>
+            <h2 class="section-title">📦 Ce Qu'On Va Regarder Dans l'Audit</h2>
             
             <div class="deliverable-list">
                 <div class="deliverable-item">
@@ -518,52 +489,6 @@
         </div>
     </section>
 
-    <section>
-        <div class="container">
-            <h2 class="section-title">⏱️ Planning de Réalisation</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-day">Jour 1</div>
-                    <div class="timeline-content">
-                        <h4>Collecte & Analyse Technique</h4>
-                        <ul>
-                            <li>Accès GSC, Analytics et données migration confirmés</li>
-                            <li>Crawl Screaming Frog complet du site</li>
-                            <li>Export et analyse des données Search Console</li>
-                            <li>Identification des patterns d'URLs désindexées</li>
-                            <li>Analyse du budget de crawl et statistiques d'exploration</li>
-                            <li>Premier diagnostic et validation des hypothèses avec vous</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-day">Jour 2</div>
-                    <div class="timeline-content">
-                        <h4>Analyse Approfondie & Livrables</h4>
-                        <ul>
-                            <li>Cartographie complète des redirections et canoniques</li>
-                            <li>Analyse des 3 000 mots-clés perdus et opportunités</li>
-                            <li>Benchmarking Indeed / Lower sur gestion job board</li>
-                            <li>Rédaction du rapport d'audit complet</li>
-                            <li>Création de la roadmap d'actions priorisées</li>
-                            <li>Présentation des résultats en visio et validation du plan</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="alert-box" style="background: #d4edda; border-color: #28a745;">
-                <h3 style="color: #155724;">🚀 Résultats Attendus Après Implémentation</h3>
-                <p style="color: #155724;">
-                    <strong>Court terme (2-3 semaines) :</strong> Récupération de 40-50% des pages perdues grâce aux quick wins (redirections, crawl budget, sitemap).<br><br>
-                    <strong>Moyen terme (1-2 mois) :</strong> Remontée vers 4 000-5 000 pages indexées avec amélioration des positions sur les requêtes stratégiques métier × ville.<br><br>
-                    <strong>Long terme (3-6 mois) :</strong> Stabilisation à 6 000-7 000 pages indexées avec croissance du trafic organique de 30-50%.
-                </p>
-            </div>
-        </div>
-    </section>
-
     <section class="cta-section">
         <div class="container">
             <h2>💰 Investissement</h2>
@@ -583,21 +508,28 @@
             </div>
             
             <p style="margin-top: 40px; font-size: 1.15em;">
-                <strong>⏰ Démarrage dès validation</strong><br>
-                Livraison complète sous 48h pour agir rapidement sur la tendance
+                <strong>📅 Démarrage semaine prochaine</strong><br>
+                Livraison complète sous 10 jours
             </p>
         </div>
     </section>
 
     <section class="contact-info">
         <div class="container">
-            <h3>📧 Lancer l'Audit Maintenant</h3>
-            <p>Réponse et proposition envoyées sous 24h comme convenu</p>
+            <h3>📬 Me Contacter</h3>
             <p style="margin-top: 20px; font-size: 1.4em; font-weight: 600;">
-                [Ton Email] • [Ton Téléphone]
+                📞 06 52 41 70 77<br>
+                ✉️ fenina.nathan@gmail.com
             </p>
+            
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/nathan-fenina/" target="_blank">🔗 LinkedIn</a>
+                <a href="https://www.youtube.com/@nathanfenina" target="_blank">📺 YouTube</a>
+                <a href="https://decupler.com" target="_blank">🌐 Mon Site</a>
+            </div>
+            
             <p style="margin-top: 30px; opacity: 0.8;">
-                AdsRank - Expert SEO Technique & Acquisition Digitale<br>
+                Nathan Fenina - Expert SEO Technique & Acquisition<br>
                 Spécialiste des audits post-migration et job boards
             </p>
         </div>
